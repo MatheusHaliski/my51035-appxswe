@@ -1,34 +1,56 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import AuthView from './pages/AuthView'
+import ListingCards from './pages/ListingCards'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useState(null)
+  const [pinVerified, setPinVerified] = useState(false)
+  const [currentPage, setCurrentPage] = useState('authview')
+
+  const handleAuthenticated = ({ user: nextUser, pinVerified: verified }) => {
+    setUser(nextUser)
+    if (typeof verified === 'boolean') {
+      setPinVerified(verified)
+    }
+  }
+
+  const handleNavigate = (page) => {
+    setCurrentPage(page)
+  }
+
+  const handleSignOut = () => {
+    setUser(null)
+    setPinVerified(false)
+    setCurrentPage('authview')
+  }
+
+  if (currentPage === 'listingcards') {
+    if (!user || !pinVerified) {
+      return (
+        <AuthView
+          onAuthenticated={handleAuthenticated}
+          onNavigate={handleNavigate}
+          user={user}
+        />
+      )
+    }
+
+    return (
+      <ListingCards
+        user={user}
+        onSignOut={handleSignOut}
+        onNavigate={handleNavigate}
+      />
+    )
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <AuthView
+      onAuthenticated={handleAuthenticated}
+      onNavigate={handleNavigate}
+      user={user}
+    />
   )
 }
 

@@ -1,42 +1,238 @@
-#root {
-  max-width: 1280px;
+:root {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #0f172a;
+  background-color: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+.page {
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 48px 24px 64px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h1 {
+  margin: 0 0 12px;
+  font-size: 32px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+p {
+  margin: 0;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 11px;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.subtext {
+  color: #475569;
+  margin-bottom: 24px;
+}
+
+.auth-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 24px 40px rgba(15, 23, 42, 0.12);
+  display: grid;
+  gap: 28px;
+}
+
+.auth-section {
+  display: grid;
+  gap: 12px;
+}
+
+label {
+  font-size: 14px;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+input,
+select {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #cbd5f5;
+  background: #fff;
+  font-size: 14px;
+}
+
+button {
+  font-family: inherit;
+}
+
+.primary {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ghost {
+  background: transparent;
+  border: 1px solid #cbd5f5;
+  color: #1f2937;
+  border-radius: 999px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 13px;
+}
+
+.helper {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.signed-in {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background: #22c55e;
+  border-radius: 50%;
+}
+
+.listing-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 24px 28px;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+  margin-bottom: 24px;
+}
+
+.user-card {
+  text-align: right;
+  min-width: 220px;
+  display: grid;
+  gap: 8px;
+}
+
+.user-label {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+}
+
+.user-id {
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0;
+}
+
+.user-email {
+  color: #475569;
+  font-size: 13px;
+  margin: 0;
+}
+
+.filters {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+  margin-bottom: 24px;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.cards {
+  margin-top: 24px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.restaurant-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.06);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.card-top h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.rating {
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.card-meta {
+  margin-top: 8px;
+  color: #475569;
+  font-size: 14px;
+}
+
+.badge {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.empty {
+  color: #64748b;
+}
+
+@media (max-width: 720px) {
+  .listing-header {
+    align-items: stretch;
   }
-  to {
-    transform: rotate(360deg);
+
+  .user-card {
+    text-align: left;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
