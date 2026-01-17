@@ -7,7 +7,13 @@ const generateUserId = (email) => {
   return `google-${seed || 'user'}-${Math.floor(Math.random() * 900 + 100)}`
 }
 
-export default function AuthView({ onAuthenticated, onNavigate, user }) {
+export default function AuthView({
+  onAuthenticated,
+  onNavigate,
+  user,
+  blockedLogins = [],
+  onFailedPinAttempt,
+}) {
   const [email, setEmail] = useState('')
   const [pin, setPin] = useState('')
   const [error, setError] = useState('')
@@ -45,8 +51,18 @@ export default function AuthView({ onAuthenticated, onNavigate, user }) {
       return
     }
 
+    if (signedInUser && blockedLogins.includes(signedInUser.email)) {
+      setPinError('Your account is blocked due to too many failed attempts.')
+      return
+    }
+
     if (pin.trim() !== VALID_PIN) {
-      setPinError('Incorrect PIN. Please try again.')
+      const attempts = onFailedPinAttempt?.(signedInUser?.email) ?? 0
+      if (attempts >= 3) {
+        setPinError('Too many incorrect attempts. Your account is blocked.')
+      } else {
+        setPinError('Incorrect PIN. Please try again.')
+      }
       return
     }
 
