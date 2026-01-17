@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import './App.css'
 import AuthView from './pages/AuthView'
 import ListingCards from './pages/ListingCards'
+import ErrorBoundary from './components/ErrorBoundary'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -80,11 +81,13 @@ function App() {
     }
 
     return (
-      <ListingCards
-        user={user}
-        onSignOut={handleSignOut}
-        onNavigate={handleNavigate}
-      />
+      <ErrorBoundary onError={(error) => console.error('ListingCards error:', error)}>
+        <ListingCards
+          user={user}
+          onSignOut={handleSignOut}
+          onNavigate={handleNavigate}
+        />
+      </ErrorBoundary>
     )
   }
 
