@@ -329,7 +329,7 @@ export default function ListingCards({ user, onSignOut, onNavigate }) {
         matchesStars
       )
     })
-  }, [search, country, state, category, stars])
+  }, [search, country, state, category, stars, restaurants])
 
   const handleSignOut = () => {
     onSignOut()
