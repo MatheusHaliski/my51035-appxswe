@@ -1,4 +1,147 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
+
+const RESTAURANTS = [
+  {
+    id: '001',
+    name: 'Café Aurora',
+    city: 'San Francisco',
+    state: 'CA',
+    country: 'USA',
+    category: 'Bakery/Cafe',
+    rating: 4.6,
+    price: '$$',
+    phone: '+1 (415) 555-0194',
+    address: '2140 Market St',
+    photoUrl:
+      'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: '002',
+    name: 'Pinelo Sandwich Co.',
+    city: 'Austin',
+    state: 'TX',
+    country: 'USA',
+    category: 'Sandwich Shop',
+    rating: 4.3,
+    price: '$',
+    phone: '+1 (512) 555-0142',
+    address: '705 Congress Ave',
+    photoUrl:
+      'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: '003',
+    name: 'Tucan Bistro',
+    city: 'Toronto',
+    state: 'ON',
+    country: 'Canada',
+    category: 'Casual/Local',
+    rating: 4.8,
+    price: '$$$',
+    phone: '+1 (416) 555-0131',
+    address: '118 King St W',
+    photoUrl:
+      'https://images.unsplash.com/photo-1421622548261-c45bfe178854?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: '004',
+    name: 'Rio Verde',
+    city: 'São Paulo',
+    state: 'SP',
+    country: 'Brazil',
+    category: 'Casual/Local',
+    rating: 4.2,
+    price: '$$',
+    phone: '+55 (11) 5555-0109',
+    address: 'Av. Paulista, 1578',
+    photoUrl:
+      'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: '005',
+    name: 'Midnight Udon',
+    city: 'New York',
+    state: 'NY',
+    country: 'USA',
+    category: 'Japanese',
+    rating: 4.7,
+    price: '$$',
+    phone: '+1 (212) 555-0188',
+    address: '92 Allen St',
+    photoUrl:
+      'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: '006',
+    name: 'Verde Vivo',
+    city: 'Lisbon',
+    state: 'LX',
+    country: 'Portugal',
+    category: 'Vegan',
+    rating: 4.5,
+    price: '$$',
+    phone: '+351 555 0112',
+    address: 'Rua das Flores, 44',
+    photoUrl:
+      'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: '007',
+    name: 'Bella Trattoria',
+    city: 'Chicago',
+    state: 'IL',
+    country: 'USA',
+    category: 'Italian/Pizza',
+    rating: 4.4,
+    price: '$$$',
+    phone: '+1 (312) 555-0174',
+    address: '300 W Adams St',
+    photoUrl:
+      'https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: '008',
+    name: 'Barrio Tacos',
+    city: 'Mexico City',
+    state: 'CDMX',
+    country: 'Mexico',
+    category: 'Mexican',
+    rating: 4.6,
+    price: '$',
+    phone: '+52 55 5555 0133',
+    address: 'Av. Reforma 120',
+    photoUrl:
+      'https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: '009',
+    name: 'Al Noor Grill',
+    city: 'Dubai',
+    state: 'DU',
+    country: 'UAE',
+    category: 'Arabic',
+    rating: 4.3,
+    price: '$$',
+    phone: '+971 4 555 0199',
+    address: 'Jumeirah Beach Rd',
+    photoUrl:
+      'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: '010',
+    name: 'Smokehouse 88',
+    city: 'Nashville',
+    state: 'TN',
+    country: 'USA',
+    category: 'Barbeque',
+    rating: 4.1,
+    price: '$$',
+    phone: '+1 (615) 555-0167',
+    address: '415 Broadway',
+    photoUrl:
+      'https://images.unsplash.com/photo-1527169402691-feff5539e52c?auto=format&fit=crop&w=800&q=80',
+  },
+]
 
 const CATEGORY_OPTIONS = [
   'Vegan',
@@ -112,10 +255,10 @@ export default function ListingCards({ user, onSignOut, onNavigate }) {
 
           return {
             id,
-            name: String(getFieldValue(fields.name) || 'Untitled'),
-            city: String(getFieldValue(fields.city) || ''),
-            state: String(getFieldValue(fields.state) || ''),
-            country: String(getFieldValue(fields.country) || ''),
+            name: getFieldValue(fields.name) || 'Untitled',
+            city: getFieldValue(fields.city) || '',
+            state: getFieldValue(fields.state) || '',
+            country: getFieldValue(fields.country) || '',
             rating: Number(getFieldValue(fields.rating) || 0),
             price:
               getFieldValue(fields.price) ||
@@ -135,9 +278,7 @@ export default function ListingCards({ user, onSignOut, onNavigate }) {
               getFieldValue(fields.imageUrl) ||
               getFieldValue(fields.image) ||
               '',
-            categories: normalizedCategories
-              .map((value) => String(value))
-              .filter(Boolean),
+            categories: normalizedCategories,
           }
         })
 
@@ -162,7 +303,7 @@ export default function ListingCards({ user, onSignOut, onNavigate }) {
       ? restaurants.filter((item) => item.country === country)
       : restaurants
     return uniqueValues(filtered, 'state')
-  }, [country, restaurants])
+  }, [country])
   const categories = useMemo(() => CATEGORY_OPTIONS, [])
 
   const filteredRestaurants = useMemo(() => {
@@ -270,38 +411,26 @@ export default function ListingCards({ user, onSignOut, onNavigate }) {
           <div className="card-grid">
             {filteredRestaurants.map((restaurant) => (
               <article key={restaurant.id} className="restaurant-card">
-                {restaurant.photoUrl ? (
-                  <img
-                    src={restaurant.photoUrl}
-                    alt={`Photo of ${restaurant.name}`}
-                    className="card-photo"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div className="card-photo placeholder">No photo</div>
-                )}
+                <img
+                  src={restaurant.photoUrl}
+                  alt={`Photo of ${restaurant.name}`}
+                  className="card-photo"
+                />
                 <div className="card-body">
                   <div className="card-top">
                     <h3>{restaurant.name}</h3>
                     <span className="rating">{restaurant.rating.toFixed(1)}</span>
                   </div>
                   <p className="card-meta">
-                    {restaurant.address}
-                    {restaurant.address ? ' · ' : ''}
-                    {restaurant.city}
-                    {restaurant.city ? ', ' : ''}
-                    {restaurant.state}
-                    {restaurant.state ? ' · ' : ''}
+                    {restaurant.address} · {restaurant.city}, {restaurant.state} ·{' '}
                     {restaurant.country}
                   </p>
                   <div className="card-details">
-                    <span>Price: {restaurant.price || 'N/A'}</span>
-                    <span>Phone: {restaurant.phone || 'N/A'}</span>
+                    <span>Price: {restaurant.price}</span>
+                    <span>Phone: {restaurant.phone}</span>
                     <span>ID: {restaurant.id}</span>
                   </div>
-                  <div className="badge">
-                    {restaurant.categories?.[0] || 'Casual/Local'}
-                  </div>
+                  <div className="badge">{restaurant.category}</div>
                 </div>
               </article>
             ))}
